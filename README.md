@@ -1,10 +1,11 @@
-# PA11: Final Project - 3-D multiplayer derivation of Conway's Game of Life
+# 3D Golad
 
-## Group
-This is the main repository for the code. The group members include
-  * Jordan Andrieu
-  * Deev Patel
-  * Braeden Richards
+## Description
+3D Golad is based on Golad by carykh which is a multiplayer strategy game based on Conway's Game of Life. The main change aside from graphics is that the board is now a cube instead of a 2d plane, and the automata move about the surface. While in play the players can fly around the inside of the cube watching the cells move around them.
+
+3D Golad works in bothe single player and multiplayer. In single player you can place both red an blue cells then step through the simulation, or watch the simulation progress automatically. In multiplayer the board is ranomly populated with red and blue cells and the players need to kill or revive cells in order to dominate the field.
+
+This was originally created as a final project for CS480 at the University of Nevada, Reno by [Jordan Andrieu](https://github.com/J-Andrieu), [Deev Patel](https://github.com/pateldeev), and [Braeden Richards](https://github.com/bjrichards). This repository, as of December 2018, will be maintained solely by Jordan Andrieu. 
 
 ## Dependency Instructions
 This project uses OpenGL 3.3. Newer versions should work, but nothing is guaranteed. <br>
