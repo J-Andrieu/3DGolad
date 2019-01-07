@@ -1,0 +1,99 @@
+# Configuration File for Final Project (PA11)
+# This file must be properly formatted for everything to work correctly.
+# All lines are in the format "aribute=value". Notice there is no space after the = sign and no quotations around the value.
+# One should only change the values of variables. Changing the order or adding new variables may cause the program to fail.
+
+
+#Main window paramters - height & width only used when fullscreen is off
+WINDOW_NAME=PA11_FinalProject
+WINDOW_FULLSCREEN=0
+WINDOW_SIZE=750,1000
+
+
+#Initial camera information
+CAMERA_EYEPOS=30.0,15.0,20.0
+CAMERA_FOCUSPOS=0.0,0.0,0.0
+
+
+#IMGUI menu system
+ENABLE_MENU=0
+MENU_SIZE=400,600
+
+
+#Main repeating object of board
+OBJ_FILE=objFiles/cube.obj
+OBJ_SCALE=1.0,1.0,1.0
+OBJ_ROTATION=0.0,0.0,0.0
+OBJ_DIFFUSE=0.2,0.2,0.2
+OBJ_SPECULAR=0.8,0.8,0.8
+OBJ_SHININESS=32
+
+
+#For lighting
+#AMBIENT_LEVEL=0.4,0.4,0.4
+AMBIENT_LEVEL=1.0,1.0,1.0
+
+
+//For various textures
+TEXTURE_DEAD=objFiles/textures/dead.png
+TEXTURE_P1_ALIVE_FUTURE=objFiles/textures/blue_birth.png
+TEXTURE_P2_ALIVE_FUTURE=objFiles/textures/red_birth.png
+TEXTURE_P1_ALIVE=objFiles/textures/blue_alive.png
+TEXTURE_P2_ALIVE=objFiles/textures/red_alive.png
+TEXTURE_P1_DEAD_FUTURE=objFiles/textures/blue_dying.png
+TEXTURE_P2_DEAD_FUTURE=objFiles/textures/red_dying.png
+TEXTURE_P1_ALIVE_MARKED=objFiles/textures/blue_marked_for_life.png
+TEXTURE_P2_ALIVE_MARKED=objFiles/textures/red_marked_for_life.png
+TEXTURE_P1_DEAD_MARKED=objFiles/textures/blue_marked_for_death.png
+TEXTURE_P2_DEAD_MARKED=objFiles/textures/red_marked_for_death.png
+
+
+#Floor
+BOARD_SIDE=0
+BOARD_SIZE=19,19
+BOARD_START_POINT=2.5,0.0,2.5
+BOARD_CHANGE_ROW=2.5,0.0,0.0
+BOARD_CHANGE_COL=0.0,0.0,2.5
+
+#Roof
+BOARD_SIDE=1
+BOARD_SIZE=21,20
+BOARD_START_POINT=0.0,50.0,0.0
+BOARD_CHANGE_ROW=2.5,0.0,0.0
+BOARD_CHANGE_COL=0.0,0.0,2.5
+
+#North
+BOARD_SIDE=2
+BOARD_SIZE=20,20
+BOARD_START_POINT=0.0,0.0,0.0
+BOARD_CHANGE_ROW=0.0,2.5,0.0
+BOARD_CHANGE_COL=0.0,0.0,2.5
+
+#South
+BOARD_SIDE=3
+BOARD_SIZE=20,20
+BOARD_START_POINT=50.0,0.0,0.0
+BOARD_CHANGE_ROW=0.0,2.5,0.0
+BOARD_CHANGE_COL=0.0,0.0,2.5
+
+#East
+BOARD_SIDE=4
+BOARD_SIZE=21,21
+BOARD_START_POINT=0.0,0.0,50.0
+BOARD_CHANGE_ROW=0.0,2.5,0.0
+BOARD_CHANGE_COL=2.5,0.0,0.0
+
+#West
+BOARD_SIDE=5
+BOARD_SIZE=20,19
+BOARD_START_POINT=2.5,0.0,0.0
+BOARD_CHANGE_ROW=0.0,2.5,0.0
+BOARD_CHANGE_COL=2.5,0.0,0.0
+
+
+#Shaders
+NAME_SET=Default
+VERTEX_SHADER=shaders/vertexDefault.vert
+FRAGMENT_SHADER=shaders/fragmentDefault.frag
+
+DEFAULT_SET=Default
