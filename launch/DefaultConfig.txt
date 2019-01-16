@@ -19,6 +19,8 @@ CAMERA_FOCUSPOS=0.0,0.0,0.0
 ENABLE_MENU=0
 MENU_SIZE=400,600
 
+#For simulation speed
+AUTOPLAY_INTERVAL=250
 
 #Main repeating object of board
 OBJ_FILE=objFiles/cube.obj

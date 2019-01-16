@@ -38,7 +38,7 @@ Graphics::Graphics(const glm::uvec2 & windowSize, const glm::vec3 & eyePos, cons
 
 	m_calculatingGeneration.store(false);
 	m_isAutoplaying = false;
-	m_autoplayInterval = 250; //half second interval
+	m_autoplayInterval = 250; //quarter second interval
 	m_board = new Board(game); //load board
 
 	srand(time(nullptr));

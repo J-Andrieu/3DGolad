@@ -71,6 +71,10 @@ void ConfigFileParser::GetGameInfo(GameInfo & game) {
 	float valuesfl[3];
 	unsigned valuesui[2];
 
+        //get autoplay time interval
+        if (!ParseLine <float> (varName, &game.m_autoplayInterval) || varName.compare("AUTOPLAY_INTERVAL"))
+            throw std::string("Could not get autoplay time interval from config file");
+        
 	//get object file
 	if (!ParseLine < std::string > (varName, &game.m_object.m_objFile) || varName.compare("OBJ_FILE"))
 		throw std::string("Could not get object file from config file");

@@ -79,6 +79,7 @@ typedef struct GameInfo {
 	ObjectInfo m_object;
 	std::string m_textures[ObjType::NUM_TYPES];
 	glm::vec3 m_ambientLevel;
+        float m_autoplayInterval;
 	BoardInfo m_sides[BoardSides::NUM_SIDES];
 } GameInfo;
 
