@@ -3,7 +3,7 @@
 #include <chrono>
 #include <assert.h>
 
-Engine::Engine(const std::string & launchFile, float frameCap) :
+Engine::Engine(const std::string & launchFile, const CommandLineArgs & args, float frameCap) :
 		m_window(nullptr), m_graphics(nullptr), m_configFile(launchFile), m_shift(false), m_w(false), m_a(false), m_s(false), m_d(false), m_spacebar(
 				false), m_leftShift(false), m_captureMouse(true), m_mouseWarp(true), m_menu(nullptr), m_menuSize(0, 0), m_menuLastTime(0), m_dt(0), m_currentTimeMillis(
 				Engine::GetCurrentTimeMillis()), m_running(false), m_minFrameTime(1.0f / frameCap * 1000) {
@@ -13,6 +13,10 @@ Engine::Engine(const std::string & launchFile, float frameCap) :
 	std::string windowName;
 	glm::uvec2 windowSize;
 	m_configFile.GetWindowInfo(windowName, windowSize);
+        if (args.m_FLAGS & CommandLineFlags::WINDOW_SIZE) {
+            windowSize = args.m_windowSize;
+        }
+        
 	m_window = new Window(windowName, windowSize.x, windowSize.y);
 
 	//get camera information for configuration file
@@ -22,10 +26,26 @@ Engine::Engine(const std::string & launchFile, float frameCap) :
 	//check if menu needs to be initialized
 	bool menu;
 	m_configFile.GetMenuState(menu, m_menuSize);
-
+        if (args.m_FLAGS & CommandLineFlags::MENU_SIZE) {
+            m_menuSize - args.m_menuSize;
+        }
+        
 	//get board information from configuration file
 	GameInfo game;
 	m_configFile.GetGameInfo(game);
+        if (args.m_FLAGS & CommandLineFlags::AMBIENT_LEVEL) {
+            game.m_ambientLevel = args.m_ambientLevel;
+        }
+        if (args.m_FLAGS & CommandLineFlags::AUTOPLAY) {
+            game.m_autoplayInterval = args.m_autoplayInterval;
+        }
+        if (args.m_FLAGS & CommandLineFlags::NUM_OBJECTS) {
+            //set the wall direction vectors to default, dynamically calculate starting positions
+        }
+        if (args.m_FLAGS & CommandLineFlags::OBJ_FILE) {
+            game.m_object.m_objFile = args.m_objectFilePath;
+        }
+       
 	m_graphics = new Graphics(glm::uvec2(m_window->GetWindowWidth(), m_window->GetWindowHeight()), eyePos, eyeLoc, game); //start the graphics
 
 	//add shader sets and set active one
@@ -36,6 +56,9 @@ Engine::Engine(const std::string & launchFile, float frameCap) :
 	} catch (bool) { //no more shader sets to parse
 	}
 	m_configFile.GetShaderSetActive(shaderSetName);
+        
+        //this one could be a tad trickier... but if flagged, use these shaders (or remove the option cuz it's not worth it lol)
+        
 	m_graphics->UseShaderSet(shaderSetName);
 
 	if (menu)

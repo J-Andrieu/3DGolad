@@ -5,8 +5,8 @@
 
 
 #Main window paramters - height & width only used when fullscreen is off
-WINDOW_NAME=PA11_FinalProject
-WINDOW_FULLSCREEN=1
+WINDOW_NAME=3D_GOLAD
+WINDOW_FULLSCREEN=0
 WINDOW_SIZE=750,1000
 
 

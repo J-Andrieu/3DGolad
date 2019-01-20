@@ -9,7 +9,7 @@
 class Engine {
 public:
 	Engine(void) = delete;
-	Engine(const std::string & launchFile, float frameCap = 100);
+	Engine(const std::string & launchFile, const CommandLineArgs & args, float frameCap = 100);
 	~Engine(void);
 
 	//Engine is not meant to be copied or moved

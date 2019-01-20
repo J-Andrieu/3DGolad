@@ -58,6 +58,33 @@ enum BoardSides{
 	NUM_SIDES
 };
 
+enum CommandLineFlags {
+    LAUNCHFILE = 1,
+    AUTOPLAY = 1 << 1,
+    NUM_OBJECTS = 1 << 2,
+    AMBIENT_LEVEL = 1 << 3,
+    VERTEX_SHADER = 1 << 4,
+    FRAGMENT_SHADER = 1 << 5,
+    WINDOW_SIZE = 1 << 6,
+    FULL_SCREEN = 1 << 7,
+    MENU_SIZE = 1 << 8,
+    OBJ_FILE = 1 << 9,
+};
+
+typedef struct CommandLineArgs {
+    uint m_FLAGS = 0;
+    std::string m_launchFile;
+    float m_autoplayInterval;
+    uint m_numObjects;//n, where number of objects is nxnx6 
+    glm::vec3 m_ambientLevel;
+    std::string m_vertexShaderPath;
+    std::string m_fragmentShaderPath;
+    glm::uvec2 m_windowSize;
+    bool m_fullScreen;
+    glm::uvec2 m_menuSize;
+    std::string m_objectFilePath;
+} CommandLineArgs;
+
 typedef struct ObjectInfo {
 	std::string m_objFile;
 	glm::vec3 m_scale;
