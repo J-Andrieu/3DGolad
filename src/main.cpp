@@ -51,7 +51,20 @@ bool ParseCommandLine(int argc, char* argv[], CommandLineArgs & args) {
     args.m_FLAGS = 0;
     for (int i = 1; i < argc; i++) {
         if (std::strcmp(argv[i], "-h") == 0) {//display information about application and command line arguments, exit the application
-            //whoot
+            std::cout << "3D Golad is an implementation of carykh's GOLAD where play occurs on the faces of a cube. ";
+            std::cout << "When in play, you may use the mouse and keyboard to fly around, and use left mouse to select cubes";
+            std::cout << "then you can hit enter in order to cause the single player simulation to run on it's own!" << std::endl;
+            std::cout << "For more detailed information, please see the technical manual." << std::endl << std::endl;
+            std::cout << "Possible command line options include: " << std::endl;
+            std::cout << "-l\tThis option allows you to specify the location of a launch file" << std::endl;
+            std::cout << "-s\tThis option allows you to specify the time between generations in milliseconds when running the simulation" << std::endl;
+            std::cout << "-w\tThis option allows you to specify window size. Allowed formats are height,width or height width. you can also enter full or fullscreen" << std::endl;
+            std::cout << "-m\tThis option allows you to specify the menu size. Allowed formats are height,width or height width" << std::endl;
+            std::cout << "-a\tThis option allows you to specify ambient light level. Allowed formats are r,g,b or r g b" << std::endl;
+            std::cout << "-o\tThis option allows you to specify the location of a different object file for the cubes" << std::endl << std::endl;
+            std::cout << "An example for launch 3D Golad in full screen with a higher ambient light level would be:" << std::endl;
+            std::cout << "./3D_GOLAD -l launch/DefaultConfig.txt -a 1.5,1.5,1.5 -w full" << std::endl;
+            return false;
         } else if (std::strcmp(argv[i], "-l") == 0) {//launch file
             args.m_FLAGS |= CommandLineFlags::LAUNCHFILE;
             args.m_launchFile = std::string(argv[++i]);
@@ -123,6 +136,11 @@ bool ParseCommandLine(int argc, char* argv[], CommandLineArgs & args) {
                     std::cerr << "Invalid ambient light level: " << argv[i] << std::endl << "Now exiting!" << std::endl;
                     return false;
                 }
+            }
+            if (args.m_ambientLevel.r < 0 || args.m_ambientLevel.g < 0 || args.m_ambientLevel.b < 0) {
+                std::cout << "Invalid ambient light level: " << args.m_ambientLevel.r << ", " << args.m_ambientLevel.g << ", " << args.m_ambientLevel.b << std::endl;
+                std::cout << "Now exiting!" << std::endl;
+                return false;
             }
             #ifdef DEBUG
             std::cout << "Ambient light: " << args.m_ambientLevel.r << ", " << args.m_ambientLevel.g << ", " << args.m_ambientLevel.b << std::endl;
@@ -224,6 +242,7 @@ bool ParseCommandLine(int argc, char* argv[], CommandLineArgs & args) {
 #endif
         } else {
             std::cerr << "Invalid parameter flag: " << argv[i] << std::endl;
+            std::cerr << "Try running with -h to see flag options." << std::endl;
             std::cerr << "Now exiting!" << std::endl;
             return false;
         }
