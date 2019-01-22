@@ -67,7 +67,7 @@ void Graphics::UseShaderSet(const std::string & setName) {
 
 void Graphics::Update(unsigned int dt) {
 	m_board->Update();
-	m_board->UpdateSpotlightLoc(GetEyeFocus());
+	m_board->UpdateSpotlightLoc(GetEyePos(), glm::normalize(GetEyeFocus() - GetEyePos()), std::cos(3.14159 * 20.0 / 180));//temporary, replace w/ variable later for changing value
 }
 
 void Graphics::Render(void) {
@@ -272,7 +272,7 @@ void Graphics::MoveForwardGeneration(void) {
 #endif
 	m_generationThread = new std::thread([this] {
 		glm::uvec3 tempElement(0, 0, 0);
-		std::unordered_set<std::pair<glm::uvec3, ObjType>, PositionHasher, PositionComparator> updates; //keep track of updated in hash table - effecient
+		std::unordered_set<std::pair<glm::uvec3, ObjType>, PositionHasher, PositionComparator> updates; //keep track of updated in hash table - efficient
 
 			do { //go through all the elements
 				ObjType tempElementType = m_board->GetGameElementType(tempElement);

@@ -14,11 +14,15 @@ uniform int numPerRow;
 uniform vec3 ambientP, diffuseP, specularP;
 uniform float shininess;
 
-uniform vec3 lightPos;
+uniform vec3 spotlightPos;
+uniform vec3 spotlightDir;
+uniform float spotlightCutoff;
+
 uniform vec3 eyePos;
 
 //function to add contribution of one light
 vec3 addLight(vec3 baseColor, vec3 lightPosition);
+vec3 addSpotlight(vec3 baseColor, vec3 spotlightPosition, vec3 spotlightDirection, float spotlightAngle);
 
 void main(void){
   vec4 baseColor;
@@ -49,7 +53,8 @@ void main(void){
     baseColor = texture2D(samplers[0], texture);
 
   //add contribution of light
-  baseColor = vec4(addLight(baseColor.rgb, lightPos), baseColor.a);
+  //baseColor = vec4(addLight(baseColor.rgb, spotlightPos), baseColor.a);
+  baseColor = vec4(addSpotlight(baseColor.rgb, spotlightPos, spotlightDir, spotlightCutoff), baseColor.a);
 
   frag_color = baseColor;
 }
@@ -74,6 +79,34 @@ vec3 addLight(vec3 baseColor, vec3 lightPosition){
   float attenuation = 1.0 / (1.0 + 0.009 * distance + 0.0032 * (distance * distance));
   diffuse *= attenuation;    
   specular *= attenuation;    
+
+  return ((ambient + diffuse + specular) * baseColor);
+}
+
+vec3 addSpotlight(vec3 baseColor, vec3 spotlightPosition, vec3 spotlightDirection, float spotlightAngle) {
+  vec3 E = normalize(eyePos - v_posWorld);
+  vec3 N = normalize(v_normalWorld);
+  vec3 L = normalize(spotlightPosition - v_posWorld);
+  vec3 H = normalize(L + E);
+  
+  vec3 ambient = ambientP;
+  vec3 diffuse = vec3(0, 0, 0);
+  vec3 specular = vec3(0, 0, 0);
+
+  if (dot(-spotlightDirection, L) > spotlightAngle) {//if within the spotlight
+    float kD = max(dot(N, L), 0.0);
+    diffuse = diffuseP * kD;
+
+    float kS = pow(max(dot(N, H), 0.0), shininess);
+    specular = specularP * kS;
+    if(dot(N, L) < 0.0) 
+      specular = vec3(0.0,0.0,0.0);
+
+    float distance = length(spotlightPosition - v_posWorld);
+    float attenuation = 1.0 / (1.0 + 0.009 * distance + 0.0032 * (distance * distance));
+    diffuse *= attenuation;    
+    specular *= attenuation;    
+  }
 
   return ((ambient + diffuse + specular) * baseColor);
 }

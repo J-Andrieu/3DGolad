@@ -64,7 +64,9 @@ void Board::UseShaderSet(const std::string & setName) {
 	bindUniform(m_modelMatrix, "model");
 
 	//find lighting uniforms
-	bindUniform(m_lightPos, "lightPos");
+	bindUniform(m_lightPos, "spotlightPos");
+        bindUniform(m_lightDir, "spotlightDir");
+        bindUniform(m_lightConstraint, "spotlightCutoff");
 	bindUniform(m_cameraPos, "eyePos");
 	bindUniform(m_ambientProduct, "ambientP");
 	bindUniform(m_diffuseProduct, "diffuseP");
@@ -118,13 +120,17 @@ void Board::ChangeSpecularLight(const glm::vec3 & change) {
 	UpdateLightBindings();
 }
 
-void Board::UpdateSpotlightLoc(const glm::vec3 & location) {
+void Board::UpdateSpotlightLoc(const glm::vec3 & location, const glm::vec3 & direction, const float constraint) {
 	m_spotlightLoc = location;
+        m_spotlightDir = direction;
+        m_spotlightConstraint = constraint;
 	if (!m_shaderCurrent) //Ensure shader is enabled
 		throw std::string("No shader has been enabled!");
 
 	//update location
 	glUniform3f(m_lightPos, m_spotlightLoc.x, m_spotlightLoc.y, m_spotlightLoc.z);
+        glUniform3f(m_lightDir, m_spotlightDir.x, m_spotlightDir.y, m_spotlightDir.z);
+        glUniform1f(m_lightConstraint, m_spotlightConstraint);
 }
 
 //updates bindings for camera in shader
@@ -145,7 +151,9 @@ void Board::UpdateLightBindings(void) {
 
 	//add lighting varibles/uniforms to shaders if needed
 	glUniform3f(m_lightPos, m_spotlightLoc.x, m_spotlightLoc.y, m_spotlightLoc.z);
-
+        glUniform3f(m_lightDir, m_spotlightDir.x, m_spotlightDir.y, m_spotlightDir.z);
+        glUniform1f(m_lightConstraint, m_spotlightConstraint);
+        
 	glUniform3f(m_ambientProduct, m_ambientLevel.x, m_ambientLevel.y, m_ambientLevel.z);
 	glUniform3f(m_diffuseProduct, m_diffuseLevel.x, m_diffuseLevel.y, m_diffuseLevel.z);
 	glUniform3f(m_specularProduct, m_specularLevel.x, m_specularLevel.y, m_specularLevel.z);
